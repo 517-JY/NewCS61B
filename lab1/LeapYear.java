@@ -29,5 +29,19 @@ public class LeapYear {
             }
         }
     }
+
+
+    /** This method will test whether the given year is a LeapYear or not
+     *  @param  year to be analyzed
+     */
+    public static boolean isLeapYear(int year) {
+        if(year % 400 == 0) {
+            return true;
+        } else if((year % 4 ==0) && (year % 100 !=0)) {
+            return true;
+        }
+
+        return false;
+    }
 }
 
