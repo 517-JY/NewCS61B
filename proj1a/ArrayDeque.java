@@ -5,7 +5,6 @@ import java.util.NoSuchElementException;
  * Implementation only based on array
  * @param <T>
  */
-
 public class ArrayDeque<T> {
     private final int dequeCapacity = 8;
     private T[] queue;
@@ -167,7 +166,7 @@ public class ArrayDeque<T> {
      */
     public void printDeque() {
         int count = 1;
-        int startFlag =(head + 1) % queue.length;
+        int startFlag = (head + 1) % queue.length;
         while (count <= size) {
             System.out.print(queue[startFlag] + " ");
             startFlag = (startFlag + 1) % queue.length;
