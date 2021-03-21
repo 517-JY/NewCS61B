@@ -151,4 +151,66 @@ public class LinkedListDeque<T> {
         size++;
     }
 
+
+    /**
+     * Adds an type T element at the front of the deque
+     * @param data T type element pending for adding
+     */
+    public void addFirst(T data) {
+        Node newNode = new Node(data);
+        newNode.next = sentinel.next;
+        sentinel.next.prev = newNode;
+        newNode.prev = sentinel;
+        sentinel.next = newNode;
+        size++;
+    }
+
+    /**
+     * Removes the first Node's data in the front of the LinkedList
+     * If the LinkedList is empty, return null
+     * @return the data field of the front node, if the list is empty, return null
+     */
+    public T removeFirst() {
+        if (size == 0) {
+            return null;
+        } else {
+            // target will later be dealt with the Garbage Collection
+            Node target = sentinel.next;
+            T resultData = target.data;
+            sentinel.next = target.next;
+            target.next.prev = sentinel;
+            size--;
+            return resultData;
+        }
+    }
+
+
+    /**
+     * Removes the last Node's data at the end of the LinkedList
+     * If the LinkedList is empty, return null
+     * @return the data field of the end node, if the list is empty, return null
+     */
+    public T removeLast() {
+        if (size == 0) {
+            return null;
+        } else {
+            // target will later be dealt with the Garbage Collection
+            Node target = sentinel.prev;
+            T resultData = target.data;
+            sentinel.prev = target.prev;
+            target.prev.next = sentinel;
+            size--;
+            return resultData;
+        }
+    }
+
+
+    /**
+     * Returns the number of elements in the double LinkedList
+     * @return the number of elements in the double LinkedList
+     */
+    public int size() {
+        return size;
+    }
+
 }
