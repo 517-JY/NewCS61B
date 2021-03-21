@@ -7,7 +7,7 @@ public class LinkedListDeque<T> {
      * First item (if exists) is sentinel.next
      * Last item (if exists).next is the sentinel Node.
      */
-    public class Node {
+    private class Node {
         /** Gets the previous Node in the deque. */
         private Node prev;
 
@@ -18,7 +18,8 @@ public class LinkedListDeque<T> {
         private Node next;
 
         /**
-         * Constructs a doubly linked list node that holds a data element but does not point to any other nodes
+         * Constructs a doubly linked list node that holds a data element
+         * but does not point to any other nodes
          */
         Node(T element) {
             data = element;
@@ -261,11 +262,23 @@ public class LinkedListDeque<T> {
     private T getRecursiveHelper(Node node, int i) {
         if (node == sentinel || i >= size) {
             return null;
-        } else if (i ==0) {
+        } else if (i == 0) {
             return node.data;
         } else {
-            return getRecursiveHelper(node.next, i-1);
+            return getRecursiveHelper(node.next, i - 1);
         }
+    }
+
+    /**
+     * Prints the items sequentially
+     */
+    public void printDeque() {
+        Node flag = sentinel.next;
+        while (flag != null) {
+            System.out.println(flag.data + " ");
+            flag = flag.next;
+        }
+
     }
 
 }
