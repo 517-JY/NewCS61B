@@ -40,7 +40,7 @@ public class ArrayDeque<T> {
      */
     public T removeLast() {
         if (size == 0) {
-            throw new NoSuchElementException();
+            return null;
         } else {
             tail = (tail - 1 + queue.length) % queue.length;
             T temp = queue[tail];
@@ -69,7 +69,7 @@ public class ArrayDeque<T> {
      */
     public T removeFirst() {
         if (size == 0) {
-            throw new NoSuchElementException();
+            return null;
         } else {
             head = (head + 1) % queue.length;
             T temp = queue[head];
