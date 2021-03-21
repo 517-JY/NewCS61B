@@ -171,7 +171,7 @@ public class LinkedListDeque<T> {
      * @return the data field of the front node, if the list is empty, return null
      */
     public T removeFirst() {
-        if (size == 0) {
+        if (isEmpty()) {
             return null;
         } else {
             // target will later be dealt with the Garbage Collection
@@ -191,7 +191,7 @@ public class LinkedListDeque<T> {
      * @return the data field of the end node, if the list is empty, return null
      */
     public T removeLast() {
-        if (size == 0) {
+        if (isEmpty()) {
             return null;
         } else {
             // target will later be dealt with the Garbage Collection
@@ -211,6 +211,61 @@ public class LinkedListDeque<T> {
      */
     public int size() {
         return size;
+    }
+
+    /** Returns true if deque is empty, false otherwise. */
+    public boolean isEmpty() {
+        return (size == 0);
+    }
+
+
+    /**
+     * Returns the data of the node at the given index. If the LinkedList is empty return null
+     * @param index THe given index
+     * @return node's data at the given index
+     */
+    public T get(int index) {
+        if (index >= size) {
+            return null;
+        } else {
+            Node flag = sentinel.next;
+            int i = 0;
+            while (i < index) {
+                flag = flag.next;
+                i++;
+            }
+
+            return flag.data;
+        }
+    }
+
+
+    /**
+     * Returns the data of the node at the given index. If the LinkedList is empty return null
+     * Using recursive method, not iteration
+     * @param index The given index
+     * @return node's data at the given index
+     */
+    public T getRecursive(int index) {
+        // As a node needs to be passed a parameter for recursion purpose, a helper method is needed
+        return getRecursiveHelper(sentinel.next, index);
+    }
+
+
+    /**
+     * A private helper method for getRecursive
+     * @param node start scanning node
+     * @param i the given index
+     * @return returns the data of the Node at the given index
+     */
+    private T getRecursiveHelper(Node node, int i) {
+        if (node == sentinel || i >= size) {
+            return null;
+        } else if (i ==0) {
+            return node.data;
+        } else {
+            return getRecursiveHelper(node.next, i-1);
+        }
     }
 
 }
