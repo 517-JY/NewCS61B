@@ -123,6 +123,21 @@ public class ArrayDeque<T> {
         }
     }
 
+    /** Returns the item at the given index of the array deque.
+     * @param index as specified index
+     *  If no such item exists, return null
+     *  Needs to flag the first not null item position as the start place.
+     */
+    public T get(int index) {
+        if (index >= size) {
+            return null;
+        }
+
+        int startFlag = (head + 1) % queue.length;
+        int i = (startFlag + index) % queue.length;
+        return queue[i];
+    }
+
     /**
      *  Returns the number of elements in the queue
      * @return  the number of elements in the queue
@@ -135,7 +150,7 @@ public class ArrayDeque<T> {
      * Checks whether the queue is full or not
      * @return true if the queue is full, false otherwise
      */
-    private boolean isFull() {
+    public boolean isFull() {
         return size == queue.length;
     }
 
@@ -143,7 +158,7 @@ public class ArrayDeque<T> {
      * Checks whether the queue is empty or not
      * @return true if the queue is empty, false otherwise
      */
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return size == 0;
     }
 
