@@ -39,18 +39,17 @@ public class ArrayDeque<T> {
      * @return the element that is removed
      */
     public T removeLast() {
-        if (isEmpty()) {
+        if (size == 0) {
             throw new NoSuchElementException();
+        } else {
+            tail = (tail - 1 + queue.length) % queue.length;
+            T temp = queue[tail];
+            queue[tail] = null;
+            size--;
+            needsResize();
+            return temp;
         }
-
-        tail = (tail - 1 + queue.length) % queue.length;
-        T temp = queue[tail];
-        queue[tail] = null;
-        size--;
-        needsResize();
-        return temp;
     }
-
 
     /**
      * Adds T at index head
@@ -69,16 +68,16 @@ public class ArrayDeque<T> {
      * @return the element that is removed
      */
     public T removeFirst() {
-        if (isEmpty()) {
+        if (size == 0) {
             throw new NoSuchElementException();
+        } else {
+            head = (head + 1) % queue.length;
+            T temp = queue[head];
+            queue[head] = null;
+            size--;
+            needsResize();
+            return temp;
         }
-
-        head = (head + 1) % queue.length;
-        T temp = queue[head];
-        queue[head] = null;
-        size--;
-        needsResize();
-        return temp;
     }
 
 
@@ -86,21 +85,21 @@ public class ArrayDeque<T> {
      * Creates a new deque array based on the given capacity
      * @param newLength targeted length for the newly resizing queue
      */
-    public void resize(int newLength) {
+    private void resize(int newLength) {
         T[] newQueue = (T[]) new Object[newLength];
 
         System.arraycopy(queue, (head + 1) % queue.length,
-                newQueue, 0, Math.min(size, queue.length -(head + 1) % queue.length));
+                newQueue, 0, Math.min(size, queue.length - (head + 1) % queue.length));
 
         if (newLength > queue.length) {
             // needs enlarge here
             System.arraycopy(queue, 0,
-                    newQueue, Math.min(size, queue.length -(head + 1) % queue.length),
+                    newQueue, Math.min(size, queue.length - (head + 1) % queue.length),
                             (tail - 1 + queue.length) % queue.length + 1);
         } else if (newLength < queue.length) {
             // needs shrink here
-            if(size > queue.length -(head + 1) % queue.length) {
-                System.arraycopy(queue, 0, newQueue, queue.length -(head + 1) % queue.length,
+            if (size > queue.length - (head + 1) % queue.length) {
+                System.arraycopy(queue, 0, newQueue, queue.length - (head + 1) % queue.length,
                         tail);
             }
         }
@@ -113,12 +112,13 @@ public class ArrayDeque<T> {
     /**
      *  Checks whether the queue needs resize
      *  Two cases need resizing: 1) wants to add element when the queue is full
-     *                           2) when the length of array is 16 or more and the usage factor is less than 25%
+     *                           2) when the length of array is 16 or more and
+     *                  the usage factor is less than 25%
      */
     private void needsResize() {
         if (isFull()) {
             resize(queue.length * 2);
-        } else if ( queue.length >= 16 && size < queue.length * 0.25) {
+        } else if (queue.length >= 16 && size < queue.length * 0.25) {
             resize(queue.length / 2);
         }
     }
@@ -150,7 +150,7 @@ public class ArrayDeque<T> {
      * Checks whether the queue is full or not
      * @return true if the queue is full, false otherwise
      */
-    public boolean isFull() {
+    private boolean isFull() {
         return size == queue.length;
     }
 
@@ -160,6 +160,19 @@ public class ArrayDeque<T> {
      */
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    /**
+     * Prints the elements in the queue in order
+     */
+    public void printDeque() {
+        int count = 1;
+        int startFlag =(head + 1) % queue.length;
+        while (count <= size) {
+            System.out.print(queue[startFlag] + " ");
+            startFlag = (startFlag + 1) % queue.length;
+            count++;
+        }
     }
 
 }
